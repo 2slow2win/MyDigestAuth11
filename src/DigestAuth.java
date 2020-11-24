@@ -5,7 +5,6 @@ import java.net.http.HttpResponse;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Properties;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -84,12 +83,5 @@ public class DigestAuth {
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         return response.headers().map().get("www-authenticate").get(0);
-    }
-
-    private static String printHexBinary(byte[] arr) {
-        StringBuilder sb = new StringBuilder();
-        for(byte b: arr)
-            sb.append(String.format("%02x", b));
-        return sb.toString();
     }
 }

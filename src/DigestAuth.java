@@ -63,8 +63,13 @@ public class DigestAuth {
         }
         String input = String.join(":", args);
         md.update(input.getBytes());
+
 //        result = DatatypeConverter.printHexBinary(md.digest()).toLowerCase();
-        result = Base64.getEncoder().encodeToString(md.digest()).toLowerCase();
+
+        StringBuilder sb = new StringBuilder();
+        for(byte b: md.digest())
+            sb.append(String.format("%02x", b));
+        result = sb.toString();
 
         return result;
     }
@@ -79,5 +84,12 @@ public class DigestAuth {
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         return response.headers().map().get("www-authenticate").get(0);
+    }
+
+    private static String printHexBinary(byte[] arr) {
+        StringBuilder sb = new StringBuilder();
+        for(byte b: arr)
+            sb.append(String.format("%02x", b));
+        return sb.toString();
     }
 }

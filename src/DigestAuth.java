@@ -10,7 +10,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class DigestAuth {
-    private static String getAuthHeader(String pUrl, String pUser, String pPassword) throws Exception {
+    private DigestAuth() {}
+
+    public static String getAuthHeader(String pUrl, String pUser, String pPassword) throws Exception {
         String initHeader = getInitheader(pUrl);
         Properties properties = new Properties();
         properties.putAll(Arrays.stream(initHeader.split("\\s*,\\s*"))
